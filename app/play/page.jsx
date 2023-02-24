@@ -6,13 +6,13 @@ import Button from "../components/Button"
 const Snake = ({ top, left, grid, state }) => {
     const type = grid[left][top][0]
     const classNames = {
-        head: state === "loose" ? "bg-red-900" : "bg-black",
-        body: state === "loose" ? "bg-red-500" : "bg-gray-500",
-        food: state === "playing" ? "bg-red-700 border border-white" : "",
+        head: state === "loose" ? "bg-red-900 rounded" : "bg-black rounded-sm",
+        body: state === "loose" ? "bg-red-500" : "bg-green-700",
+        food: state === "playing" ? "bg-red-700 border border-white !h-3 !w-3 rounded-full" : "",
         loose: "bg-red-900",
     }
 
-    return <div style={{ top: 15 * top, left: 15 * left }} className={`absolute h-3 w-3 ${classNames[type] || ""}`} />
+    return <div style={{ top: 15 * top, left: 15 * left }} className={`absolute h-[15px] w-[15px] ${classNames[type] || ""}`} />
 }
 
 const createMoreFood = (limit, grid, setGrid, setMoreFood) => {
