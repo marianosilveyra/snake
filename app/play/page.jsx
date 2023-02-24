@@ -86,12 +86,13 @@ export default function () {
     const [level, setLevel] = useState(levels["medium"])
     const [state, setState] = useState("start")
     const [highestScore, setHighestScore] = useState(initialSnakeLength - 2)
+    const [walls, setWalls] = useState(false)
 
     const advance = {
-        top: () => setTop((top) => (top === 0 ? limit - 1 : top - 1)),
-        bottom: () => setTop((top) => (top === limit - 1 ? 0 : top + 1)),
-        right: () => setLeft((left) => (left === limit - 1 ? 0 : left + 1)),
-        left: () => setLeft((left) => (left === 0 ? limit - 1 : left - 1)),
+        top: () => setTop((top) => (top === 0 ? (walls ? setState("loose") : limit - 1) : top - 1)),
+        bottom: () => setTop((top) => (top === limit - 1 ? (walls ? setState("loose") : 0) : top + 1)),
+        right: () => setLeft((left) => (left === limit - 1 ? (walls ? setState("loose") : 0) : left + 1)),
+        left: () => setLeft((left) => (left === 0 ? (walls ? setState("loose") : limit - 1) : left - 1)),
     }
 
     const newGame = () => {
@@ -182,7 +183,13 @@ export default function () {
                     onCLick={newGame}
                     text={state === "start" ? "START GAME" : "START AGAIN"}
                     disabled={state === "playing"}
-                    className="bg-green-600"
+                    className="bg-green-600 mr-1"
+                />
+                <Button
+                    onCLick={() => setWalls(walls => !walls)}
+                    text={walls ? "Walls enabled" : "Walls disabled"}
+                    disabled={state === "playing"}
+                    className={`${walls ? "!bg-blue-400" : "bg-gray-400"}`}
                 />
             </div>
             <div className="flex justify-between mb-2">
