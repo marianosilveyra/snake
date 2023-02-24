@@ -12,7 +12,7 @@ const Snake = ({ top, left, grid, state }) => {
         loose: "bg-red-900",
     }
 
-    return <div style={{ top: 12 * top, left: 12 * left }} className={`absolute h-3 w-3 ${classNames[type] || ""}`} />
+    return <div style={{ top: 15 * top, left: 15 * left }} className={`absolute h-3 w-3 ${classNames[type] || ""}`} />
 }
 
 const createMoreFood = (limit, grid, setGrid, setMoreFood) => {
@@ -52,12 +52,12 @@ const ArrowButton = ({ className, rotate, onClick }) => (
 
 const Arrows = ({ setDirection }) => (
     <div className="flex flex-col items-center w-full">
-        <ArrowButton className="w-fit justify-self-center" rotate="-rotate-90" onClick={() => setDirection("top")} />
-        <div className="w-fit">
-            <ArrowButton className="" rotate="rotate-180" onClick={() => setDirection("left")} />
-            <ArrowButton className="" rotate="rotate-0" onClick={() => setDirection("right")} />
+        <ArrowButton className="w-fit justify-self-center rounded" rotate="-rotate-90" onClick={() => setDirection("top")} />
+        <div className="w-full flex justify-between ">
+            <ArrowButton className="rounded" rotate="rotate-180" onClick={() => setDirection("left")} />
+            <ArrowButton className="rounded" rotate="rotate-0" onClick={() => setDirection("right")} />
         </div>
-        <ArrowButton className="w-fit" rotate="rotate-90" onClick={() => setDirection("bottom")} />
+        <ArrowButton className="w-fit rounded" rotate="rotate-90" onClick={() => setDirection("bottom")} />
     </div>
 )
 
@@ -176,7 +176,7 @@ export default function () {
     }, [moreFood])
 
     return (
-        <div className="mt-16">
+        <div className="mt-4 lg:mt-16">
             <div className="flex justify-between mb-2">
                 <Button onCLick={newGame} text={state === "start" ? "START GAME" : "START AGAIN" } disabled={state === "playing"} className="bg-green-600" />
             </div>
@@ -185,7 +185,7 @@ export default function () {
                 <Button onCLick={() => setLevel(levels["medium"])} text={"Medium"} disabled={state === "playing"} className={level === levels["medium"] ? "!bg-orange-300 mr-1" : "bg-white mr-1"} />
                 <Button onCLick={() => setLevel(levels["hard"])} text={"Hard"} disabled={state === "playing"} className={level === levels["hard"] ? "!bg-orange-300" : "bg-white"} />
             </div>
-            <div className="relative h-[244px] w-[244px] border-2 border-black">
+            <div className="relative h-[300px] w-[300px] border-2 border-black">
                 {rows.map((i) => columns.map((j) => <Snake top={i} left={j} grid={grid} state={state} key={"" + i + j} />))}
             </div>
             <div>
