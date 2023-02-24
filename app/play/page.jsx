@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import Button from "../components/Button"
+import { userContext, userSetContext } from "../layout"
 
 const Snake = ({ top, left, grid, state }) => {
     const type = grid[left][top][0]
@@ -12,7 +13,7 @@ const Snake = ({ top, left, grid, state }) => {
         loose: "bg-red-900",
     }
 
-    return <div style={{ top: 15 * top, left: 15 * left }} className={`transition absolute h-[15px] w-[15px] ${classNames[type] || ""}`} />
+    return <div style={{ top: 15 * top, left: 15 * left }} className={`transition absolute z-10 h-[15px] w-[15px] ${classNames[type] || ""}`} />
 }
 
 const createMoreFood = (limit, grid, setGrid, setMoreFood) => {
@@ -40,7 +41,10 @@ const createMoreFood = (limit, grid, setGrid, setMoreFood) => {
 }
 
 const ArrowButton = ({ className, rotate, onClick }) => (
-    <button onClick={onClick} className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 flex items-center justify-center ${className}`}>
+    <button
+        onClick={onClick}
+        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 flex items-center justify-center ${className}`}
+    >
         <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transform ${rotate}`} viewBox="0 0 20 20" fill="currentColor">
             <path
                 fillRule="evenodd"
@@ -51,13 +55,17 @@ const ArrowButton = ({ className, rotate, onClick }) => (
 )
 
 const Arrows = ({ setDirection }) => (
-    <div className="flex relative flex-col items-center w-full mt-10">
-        <ArrowButton className="absolute -top-10 z-10 w-20 h-16 justify-self-center rounded-full" rotate="-rotate-90" onClick={() => setDirection("top")} />
+    <div className="flex relative flex-col items-center w-full mt-12">
+        <ArrowButton
+            className="absolute -top-9 z-10 w-20 h-16 justify-self-center rounded-full"
+            rotate="-rotate-90"
+            onClick={() => setDirection("top")}
+        />
         <div className="w-full flex justify-between ">
             <ArrowButton className="w-20 h-16 rounded-full" rotate="rotate-180" onClick={() => setDirection("left")} />
             <ArrowButton className="w-20 h-16 rounded-full" rotate="rotate-0" onClick={() => setDirection("right")} />
         </div>
-        <ArrowButton className="absolute -bottom-10 z-10 w-20 h-16 rounded-full" rotate="rotate-90" onClick={() => setDirection("bottom")} />
+        <ArrowButton className="absolute -bottom-9 z-10 w-20 h-16 rounded-full" rotate="rotate-90" onClick={() => setDirection("bottom")} />
     </div>
 )
 
@@ -67,6 +75,9 @@ export default function () {
     for (let i = 0; i < limit; i++) rows.push(i)
     const columns = []
     for (let i = 0; i < limit; i++) columns.push(i)
+
+    const user = useContext(userContext)
+    const setUser = useContext(userSetContext)
 
     const didMountRef = useRef(false)
     const initialDirection = "right"
@@ -186,7 +197,7 @@ export default function () {
                     className="bg-green-600 mr-1"
                 />
                 <Button
-                    onCLick={() => setWalls(walls => !walls)}
+                    onCLick={() => setWalls((walls) => !walls)}
                     text={walls ? "Walls on" : "Walls off"}
                     disabled={state === "playing"}
                     className={`${walls ? "!bg-blue-400" : "bg-white"}`}
@@ -212,20 +223,20 @@ export default function () {
                     className={level === levels["hard"] ? "!bg-orange-300" : "bg-white"}
                 />
             </div>
-            <div className="relative h-[304px] w-[304px] border-2 border-black">
+            <div className="relative h-[304px] w-[304px] border-2 border-black bg-slate-200 mt-4">
                 {rows.map((i) => columns.map((j) => <Snake top={i} left={j} grid={grid} state={state} key={"" + i + j} />))}
-            </div>
-            <div>
-                <div className="flex justify-between">
-                    <p>Score</p>
-                    <p>{snakeLength - initialSnakeLength}</p>
+                <div className="absolute z-0 bottom-0 w-full p-2 text-gray-400">
+                    <div className="flex justify-between">
+                        <p>Score</p>
+                        <p>{snakeLength - initialSnakeLength}</p>
+                    </div>
+                    <div className="flex justify-between">
+                        <p>Highest score</p>
+                        <p>{snakeLength - initialSnakeLength > highestScore ? snakeLength - initialSnakeLength : highestScore}</p>
+                    </div>
                 </div>
-                <div className="flex justify-between">
-                    <p>Highest score</p>
-                    <p>{snakeLength - initialSnakeLength > highestScore ? snakeLength - initialSnakeLength : highestScore}</p>
-                </div>
             </div>
-            <div className="mt-4 lg:hidden">
+            <div className="lg:hidden">
                 <Arrows setDirection={setDirection} />
             </div>
         </div>
