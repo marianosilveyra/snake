@@ -187,7 +187,7 @@ export default function () {
                 />
                 <Button
                     onCLick={() => setWalls(walls => !walls)}
-                    text={walls ? "Walls enabled" : "Walls disabled"}
+                    text={walls ? "Walls on" : "Walls off"}
                     disabled={state === "playing"}
                     className={`${walls ? "!bg-blue-400" : "bg-gray-400"}`}
                 />
