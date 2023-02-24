@@ -79,9 +79,9 @@ export default function () {
     const [snakeLength, setSnakeLength] = useState(initialSnakeLength)
     const [moreFood, setMoreFood] = useState(true)
     const levels = {
-        easy: 100,
-        medium: 70,
-        hard: 40,
+        easy: 180,
+        medium: 130,
+        hard: 80,
     }
     const [level, setLevel] = useState(levels["medium"])
     const [state, setState] = useState("start")
@@ -153,7 +153,7 @@ export default function () {
                                     setHighestScore(snakeLength - initialSnakeLength)
                                 }
                             }
-                        } else if (oldType === "body" && oldCycles > snakeLength - 3) {
+                        } else if (oldType === "body" && oldCycles > snakeLength - 2) {
                             type = "empty"
                         } else if (oldType === "body" || oldType === "head") {
                             if (snakeLength > 1) {
