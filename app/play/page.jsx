@@ -189,7 +189,7 @@ export default function () {
                     onCLick={() => setWalls(walls => !walls)}
                     text={walls ? "Walls on" : "Walls off"}
                     disabled={state === "playing"}
-                    className={`${walls ? "!bg-blue-400" : "bg-gray-400"}`}
+                    className={`${walls ? "!bg-blue-400" : "bg-white"}`}
                 />
             </div>
             <div className="flex justify-between mb-2">
