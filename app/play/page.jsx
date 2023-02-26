@@ -1,19 +1,22 @@
 "use client"
 
-import React, { useContext, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Button from "../components/Button"
-import { userContext, userSetContext } from "../layout"
 
 const Snake = ({ top, left, grid, state }) => {
     const type = grid[left][top][0]
     const classNames = {
-        head: state === "loose" ? "bg-red-900 rounded" : "bg-black rounded-sm",
-        body: state === "loose" ? "bg-red-500" : "bg-green-700",
-        food: state === "playing" ? "bg-red-700 border border-white !h-3 !w-3 rounded-full" : "",
-        loose: "bg-red-900",
+        head: state === "loose" ? "bg-red-900 rounded opacity-75" : "bg-black rounded-sm",
+        body: state === "loose" ? "bg-red-500 opacity-75" : "bg-green-700",
+        food: (state === "playing" || state === "pause") ? "bg-red-700 border border-white !h-3 !w-3 rounded-full" : "",
     }
 
-    return <div style={{ top: 15 * top, left: 15 * left }} className={`transition absolute z-10 h-[15px] w-[15px] ${classNames[type] || ""}`} />
+    return (
+        <div
+            style={{ top: 15 * top, left: 15 * left }}
+            className={`transition absolute z-10 h-[15px] w-[15px] ${classNames[type] || ""}`}
+        />
+    )
 }
 
 const createMoreFood = (limit, grid, setGrid, setMoreFood) => {
@@ -76,9 +79,6 @@ export default function () {
     const columns = []
     for (let i = 0; i < limit; i++) columns.push(i)
 
-    const user = useContext(userContext)
-    const setUser = useContext(userSetContext)
-
     const didMountRef = useRef(false)
     const initialDirection = "right"
     const [direction, setDirection] = useState(initialDirection)
@@ -91,8 +91,8 @@ export default function () {
     const [moreFood, setMoreFood] = useState(true)
     const levels = {
         easy: 180,
-        medium: 130,
-        hard: 80,
+        medium: 140,
+        hard: 100,
     }
     const [level, setLevel] = useState(levels["medium"])
     const [state, setState] = useState("start")
@@ -106,14 +106,18 @@ export default function () {
         left: () => setLeft((left) => (left === 0 ? (walls ? setState("loose") : limit - 1) : left - 1)),
     }
 
-    const newGame = () => {
-        setGrid(initialGrid)
-        setState("playing")
-        setSnakeLength(initialSnakeLength)
-        setDirection(initialDirection)
-        setMoreFood(true)
-        setTop(0)
-        setLeft(0)
+    const setGameState = () => {
+        if (state === "playing") setState("pause")
+        else if (state === "pause") setState("playing")
+        else {
+            setGrid(initialGrid)
+            setState("playing")
+            setSnakeLength(initialSnakeLength)
+            setDirection(initialDirection)
+            setMoreFood(true)
+            setTop(0)
+            setLeft(0)
+        }
     }
 
     useEffect(() => {
@@ -190,12 +194,7 @@ export default function () {
     return (
         <div className="mt-4 lg:mt-16">
             <div className="flex justify-between mb-2">
-                <Button
-                    onCLick={newGame}
-                    text={state === "start" ? "START GAME" : "START AGAIN"}
-                    disabled={state === "playing"}
-                    className="bg-green-600 mr-1"
-                />
+                <Button onCLick={setGameState} text={(state === "playing") ? "Pause" : "Play"} disabled={false} className="bg-green-600 mr-1" />
                 <Button
                     onCLick={() => setWalls((walls) => !walls)}
                     text={walls ? "Walls on" : "Walls off"}
@@ -225,7 +224,11 @@ export default function () {
             </div>
             <div className="relative h-[304px] w-[304px] border-2 border-black bg-slate-200 mt-4">
                 {rows.map((i) => columns.map((j) => <Snake top={i} left={j} grid={grid} state={state} key={"" + i + j} />))}
-                <div className="absolute z-0 bottom-0 w-full p-2 text-gray-400">
+                <div
+                    className={`absolute bottom-0 w-full p-2 ${
+                        state === "loose" ? "z-20 text-gray-700 font-semibold" : "z-0 text-gray-400"
+                    }`}
+                >
                     <div className="flex justify-between">
                         <p>Score</p>
                         <p>{snakeLength - initialSnakeLength}</p>
