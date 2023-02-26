@@ -8,7 +8,7 @@ export default function RootLayout({ children }) {
                 <title>Snake App</title>
             </head>
 
-            <body className="flex flex-col justify-center w-full font-mono bg-blue-100">
+            <body className="flex flex-col justify-center w-full font-mono bg-gray-dark">
                 <Navigation />
 
                 <div className="flex w-full justify-center">

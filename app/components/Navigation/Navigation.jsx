@@ -4,7 +4,7 @@ import links from "./links"
 export default function Navigation() {
     return (
         <header>
-            <nav className="bg-blue-300 py-4 flex justify-center">
+            <nav className="bg-violet-default text-white font-semibold hover:font-bold active:font-bold py-4 flex justify-center">
                 <div className="container w-full max-w-[1092px]">
                     <div className="flex flex-wrap justify-center px-4">
                         <div className="w-full max-w-[1092px]">

@@ -3,22 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 import Button from "../components/Button"
 
-const Snake = ({ top, left, grid, state }) => {
-    const type = grid[left][top][0]
-    const classNames = {
-        head: state === "loose" ? "bg-red-900 rounded opacity-75" : "bg-black rounded-sm",
-        body: state === "loose" ? "bg-red-500 opacity-75" : "bg-green-700",
-        food: (state === "playing" || state === "pause") ? "bg-red-700 border border-white !h-3 !w-3 rounded-full" : "",
-    }
-
-    return (
-        <div
-            style={{ top: 15 * top, left: 15 * left }}
-            className={`transition absolute z-10 h-[15px] w-[15px] ${classNames[type] || ""}`}
-        />
-    )
-}
-
 const createMoreFood = (limit, grid, setGrid, setMoreFood) => {
     let leftFood = Math.floor(Math.random() * limit)
     let topFood = Math.floor(Math.random() * limit)
@@ -43,11 +27,24 @@ const createMoreFood = (limit, grid, setGrid, setMoreFood) => {
     }
 }
 
+const Snake = ({ top, left, grid, state }) => {
+    const type = grid[left][top][0]
+    const classNames = {
+        head: state === "loose" ? "bg-red-900 rounded opacity-75" : "bg-black-dark rounded-sm",
+        body: state === "loose" ? "bg-red-500 opacity-75" : "bg-green-700",
+        food: (state === "playing" || state === "pause") ? "bg-red-700 border border-white !h-3 !w-3 rounded-full" : "",
+    }
+
+    return (
+        <div
+            style={{ top: 15 * top, left: 15 * left }}
+            className={`transition absolute z-10 h-[15px] w-[15px] ${classNames[type] || ""}`}
+        />
+    )
+}
+
 const ArrowButton = ({ className, rotate, onClick }) => (
-    <button
-        onClick={onClick}
-        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 flex items-center justify-center ${className}`}
-    >
+    <button onClick={onClick} className={`bg-violet-light text-white font-bold py-2 px-4 flex items-center justify-center ${className}`}>
         <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transform ${rotate}`} viewBox="0 0 20 20" fill="currentColor">
             <path
                 fillRule="evenodd"
@@ -90,9 +87,9 @@ export default function () {
     const [snakeLength, setSnakeLength] = useState(initialSnakeLength)
     const [moreFood, setMoreFood] = useState(true)
     const levels = {
-        easy: 180,
+        easy: 170,
         medium: 140,
-        hard: 100,
+        hard: 110,
     }
     const [level, setLevel] = useState(levels["medium"])
     const [state, setState] = useState("start")
@@ -194,12 +191,17 @@ export default function () {
     return (
         <div className="mt-4 lg:mt-16">
             <div className="flex justify-between mb-2">
-                <Button onCLick={setGameState} text={(state === "playing") ? "Pause" : "Play"} disabled={false} className="bg-green-600 mr-1" />
+                <Button
+                    onCLick={setGameState}
+                    text={state === "playing" ? "Pause" : "Play"}
+                    disabled={false}
+                    className="bg-violet-light text-white mr-1"
+                />
                 <Button
                     onCLick={() => setWalls((walls) => !walls)}
                     text={walls ? "Walls on" : "Walls off"}
                     disabled={state === "playing"}
-                    className={`${walls ? "!bg-blue-400" : "bg-white"}`}
+                    className={`${walls ? "!bg-fucsia-default text-white" : "bg-white"}`}
                 />
             </div>
             <div className="flex justify-between mb-2">
@@ -207,26 +209,26 @@ export default function () {
                     onCLick={() => setLevel(levels["easy"])}
                     text={"Easy"}
                     disabled={state === "playing"}
-                    className={level === levels["easy"] ? "!bg-orange-300 mr-1" : "bg-white mr-1"}
+                    className={level === levels["easy"] ? "!bg-fucsia-default text-white mr-1" : "bg-white mr-1"}
                 />
                 <Button
                     onCLick={() => setLevel(levels["medium"])}
                     text={"Medium"}
                     disabled={state === "playing"}
-                    className={level === levels["medium"] ? "!bg-orange-300 mr-1" : "bg-white mr-1"}
+                    className={level === levels["medium"] ? "!bg-fucsia-default text-white mr-1" : "bg-white mr-1"}
                 />
                 <Button
                     onCLick={() => setLevel(levels["hard"])}
                     text={"Hard"}
                     disabled={state === "playing"}
-                    className={level === levels["hard"] ? "!bg-orange-300" : "bg-white"}
+                    className={level === levels["hard"] ? "!bg-fucsia-default text-white" : "bg-white"}
                 />
             </div>
-            <div className="relative h-[304px] w-[304px] border-2 border-black bg-slate-200 mt-4">
+            <div className="relative h-[304px] w-[304px] border-2 border-black bg-gray-default mt-4">
                 {rows.map((i) => columns.map((j) => <Snake top={i} left={j} grid={grid} state={state} key={"" + i + j} />))}
                 <div
                     className={`absolute bottom-0 w-full p-2 ${
-                        state === "loose" ? "z-20 text-gray-700 font-semibold" : "z-0 text-gray-400"
+                        state === "loose" ? "z-20 text-black-default font-semibold" : "z-0 text-black-light"
                     }`}
                 >
                     <div className="flex justify-between">
