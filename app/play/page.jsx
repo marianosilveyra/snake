@@ -55,7 +55,7 @@ const ArrowButton = ({ className, rotate, onClick }) => (
 )
 
 const Arrows = ({ setDirection }) => (
-    <div className="flex relative flex-col items-center w-full mt-8">
+    <div className="flex relative flex-col items-center w-full my-9">
         <ArrowButton
             className="absolute -top-[34px] z-10 w-20 h-16 justify-self-center rounded-full"
             rotate="-rotate-90"
@@ -65,7 +65,11 @@ const Arrows = ({ setDirection }) => (
             <ArrowButton className="w-20 h-16 rounded-full" rotate="rotate-180" onClick={() => setDirection("left")} />
             <ArrowButton className="w-20 h-16 rounded-full" rotate="rotate-0" onClick={() => setDirection("right")} />
         </div>
-        <ArrowButton className="absolute -bottom-[34px] z-10 w-20 h-16 rounded-full" rotate="rotate-90" onClick={() => setDirection("bottom")} />
+        <ArrowButton
+            className="absolute -bottom-[34px] z-10 w-20 h-16 rounded-full"
+            rotate="rotate-90"
+            onClick={() => setDirection("bottom")}
+        />
     </div>
 )
 
@@ -189,56 +193,58 @@ export default function () {
     }, [moreFood])
 
     return (
-        <div className="mt-4 lg:mt-16">
-            <div className="flex justify-between mb-2">
-                <Button
-                    onCLick={setGameState}
-                    text={state === "playing" ? "Pause" : "Play"}
-                    disabled={false}
-                    className="bg-violet-light text-white mr-1"
-                />
-                <Button
-                    onCLick={() => setWalls((walls) => !walls)}
-                    text={walls ? "Walls on" : "Walls off"}
-                    disabled={state === "playing"}
-                    className={`${walls ? "!bg-fucsia-default text-white" : "bg-white"}`}
-                />
-            </div>
-            <div className="flex justify-between mb-2">
-                <Button
-                    onCLick={() => setLevel(levels["easy"])}
-                    text={"Easy"}
-                    disabled={state === "playing"}
-                    className={level === levels["easy"] ? "!bg-fucsia-default text-white mr-1" : "bg-white mr-1"}
-                />
-                <Button
-                    onCLick={() => setLevel(levels["medium"])}
-                    text={"Medium"}
-                    disabled={state === "playing"}
-                    className={level === levels["medium"] ? "!bg-fucsia-default text-white mr-1" : "bg-white mr-1"}
-                />
-                <Button
-                    onCLick={() => setLevel(levels["hard"])}
-                    text={"Hard"}
-                    disabled={state === "playing"}
-                    className={level === levels["hard"] ? "!bg-fucsia-default text-white" : "bg-white"}
-                />
-            </div>
-            <div className="relative h-[304px] w-[304px] border-2 border-black bg-gray-default mt-4">
-                {rows.map((i) => columns.map((j) => <Snake top={i} left={j} grid={grid} state={state} key={"" + i + j} />))}
-            </div>
-            <div className="w-full p-2">
-                <div className="flex justify-between">
-                    <p>Score</p>
-                    <p>{snakeLength - initialSnakeLength}</p>
+        <div className="flex h-screen pt-14">
+            <div className="self-center">
+                <div className="flex justify-between mb-2">
+                    <Button
+                        onCLick={setGameState}
+                        text={state === "playing" ? "Pause" : "Play"}
+                        disabled={false}
+                        className="bg-fucsia-default text-white mr-1"
+                    />
+                    <Button
+                        onCLick={() => setWalls((walls) => !walls)}
+                        text={walls ? "Walls on" : "Walls off"}
+                        disabled={state === "playing"}
+                        className={`${walls ? "!bg-violet-light text-white" : "bg-white"}`}
+                    />
                 </div>
-                <div className="flex justify-between">
-                    <p>Highest score</p>
-                    <p>{snakeLength - initialSnakeLength > highestScore ? snakeLength - initialSnakeLength : highestScore}</p>
+                <div className="flex justify-between mb-2">
+                    <Button
+                        onCLick={() => setLevel(levels["easy"])}
+                        text={"Easy"}
+                        disabled={state === "playing"}
+                        className={level === levels["easy"] ? "!bg-violet-light text-white mr-1" : "bg-white mr-1"}
+                    />
+                    <Button
+                        onCLick={() => setLevel(levels["medium"])}
+                        text={"Medium"}
+                        disabled={state === "playing"}
+                        className={level === levels["medium"] ? "!bg-violet-light text-white mr-1" : "bg-white mr-1"}
+                    />
+                    <Button
+                        onCLick={() => setLevel(levels["hard"])}
+                        text={"Hard"}
+                        disabled={state === "playing"}
+                        className={level === levels["hard"] ? "!bg-violet-light text-white" : "bg-white"}
+                    />
                 </div>
-            </div>
-            <div className="lg:hidden">
-                <Arrows setDirection={setDirection} />
+                <div className="relative h-[304px] w-[304px] border-2 border-black bg-gray-default mt-4">
+                    {rows.map((i) => columns.map((j) => <Snake top={i} left={j} grid={grid} state={state} key={"" + i + j} />))}
+                </div>
+                <div className="w-full p-2">
+                    <div className="flex justify-between">
+                        <p>Score</p>
+                        <p>{snakeLength - initialSnakeLength}</p>
+                    </div>
+                    <div className="flex justify-between">
+                        <p>Highest score</p>
+                        <p>{snakeLength - initialSnakeLength > highestScore ? snakeLength - initialSnakeLength : highestScore}</p>
+                    </div>
+                </div>
+                <div className="lg:hidden">
+                    <Arrows setDirection={setDirection} />
+                </div>
             </div>
         </div>
     )
