@@ -9,7 +9,16 @@ export default function HomePage() {
     return (
         <div className="flex h-screen flex-col justify-center">
             <div className="self-center">
-                <h1 className="text-2xl font-bold text-center mb-6">Welcome to Snake</h1>
+                <motion.h1
+                    drag
+                    dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
+                    initial={{ opacity: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    animate={{ opacity: 1 }}
+                    className="text-2xl font-bold text-center mb-6"
+                >
+                    Welcome to Snake
+                </motion.h1>
                 <Button animate={true} href={links[1].route} text="NEW GAME" className="bg-fucsia-default text-white" />
                 <motion.div
                     drag
