@@ -1,6 +1,5 @@
 "use client"
 
-import {motion} from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import Button from "../components/Button"
 
@@ -37,9 +36,7 @@ const Snake = ({ top, left, grid, state }) => {
     }
     
     return (
-        <motion.div
-            animate={type === "food" ? {scale: [0.5, 1, 0.5]} : {scale: 1}}
-            transition={type === "food" ? {duration: 1, repeat: Infinity} : {repeat: 1}}
+        <div
             style={{ top: 15 * top, left: 15 * left, transition: "background-color 0.1s" }}
             className={`absolute z-10 h-[15px] w-[15px] ${classNames[type] || ""}`}
         />
