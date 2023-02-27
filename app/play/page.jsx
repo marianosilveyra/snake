@@ -32,7 +32,7 @@ const Snake = ({ top, left, grid, state }) => {
     const classNames = {
         head: state === "loose" ? "bg-red-900 rounded opacity-75" : "bg-black-dark rounded",
         body: state === "loose" ? "bg-red-500 opacity-75" : "bg-green-700",
-        food: (state === "playing" || state === "pause") ? "bg-red-700 border border-white !h-3 !w-3 rounded-full" : "",
+        food: state === "playing" || state === "pause" ? "bg-red-700 border border-white !h-3 !w-3 rounded-full" : "",
     }
 
     return (
@@ -55,9 +55,9 @@ const ArrowButton = ({ className, rotate, onClick }) => (
 )
 
 const Arrows = ({ setDirection }) => (
-    <div className="flex relative flex-col items-center w-full mt-12">
+    <div className="flex relative flex-col items-center w-full mt-8">
         <ArrowButton
-            className="absolute -top-9 z-10 w-20 h-16 justify-self-center rounded-full"
+            className="absolute -top-[34px] z-10 w-20 h-16 justify-self-center rounded-full"
             rotate="-rotate-90"
             onClick={() => setDirection("top")}
         />
@@ -65,7 +65,7 @@ const Arrows = ({ setDirection }) => (
             <ArrowButton className="w-20 h-16 rounded-full" rotate="rotate-180" onClick={() => setDirection("left")} />
             <ArrowButton className="w-20 h-16 rounded-full" rotate="rotate-0" onClick={() => setDirection("right")} />
         </div>
-        <ArrowButton className="absolute -bottom-9 z-10 w-20 h-16 rounded-full" rotate="rotate-90" onClick={() => setDirection("bottom")} />
+        <ArrowButton className="absolute -bottom-[34px] z-10 w-20 h-16 rounded-full" rotate="rotate-90" onClick={() => setDirection("bottom")} />
     </div>
 )
 
@@ -226,19 +226,15 @@ export default function () {
             </div>
             <div className="relative h-[304px] w-[304px] border-2 border-black bg-gray-default mt-4">
                 {rows.map((i) => columns.map((j) => <Snake top={i} left={j} grid={grid} state={state} key={"" + i + j} />))}
-                <div
-                    className={`absolute bottom-0 w-full p-2 ${
-                        state === "loose" ? "z-20 text-black-default font-semibold" : "z-0 text-black-light"
-                    }`}
-                >
-                    <div className="flex justify-between">
-                        <p>Score</p>
-                        <p>{snakeLength - initialSnakeLength}</p>
-                    </div>
-                    <div className="flex justify-between">
-                        <p>Highest score</p>
-                        <p>{snakeLength - initialSnakeLength > highestScore ? snakeLength - initialSnakeLength : highestScore}</p>
-                    </div>
+            </div>
+            <div className="w-full p-2">
+                <div className="flex justify-between">
+                    <p>Score</p>
+                    <p>{snakeLength - initialSnakeLength}</p>
+                </div>
+                <div className="flex justify-between">
+                    <p>Highest score</p>
+                    <p>{snakeLength - initialSnakeLength > highestScore ? snakeLength - initialSnakeLength : highestScore}</p>
                 </div>
             </div>
             <div className="lg:hidden">
