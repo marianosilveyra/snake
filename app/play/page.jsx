@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Button from "../components/Button"
+import useCookie from 'react-use-cookie'
 
 const createMoreFood = (limit, grid, setGrid, setMoreFood) => {
     let leftFood = Math.floor(Math.random() * limit)
@@ -98,6 +99,7 @@ export default function () {
     const [level, setLevel] = useState(levels["medium"])
     const [state, setState] = useState("start")
     const [highestScore, setHighestScore] = useState(initialSnakeLength - 2)
+    const [highestScoreFromCookie, setHighestScoreFromCookie] = useCookie('highestScore', highestScore)
     const [walls, setWalls] = useState(false)
 
     const advance = {
@@ -120,6 +122,10 @@ export default function () {
             setLeft(0)
         }
     }
+
+    useEffect(() => {
+        setHighestScore(highestScoreFromCookie)
+    }, [highestScoreFromCookie])
 
     useEffect(() => {
         let interval
@@ -167,7 +173,10 @@ export default function () {
                             } else if (oldType === "body") {
                                 setState("loose")
                                 if (snakeLength - initialSnakeLength > highestScore) {
-                                    setHighestScore(snakeLength - initialSnakeLength)
+                                    const newHighestScore = snakeLength - initialSnakeLength
+                                    setHighestScore(newHighestScore)
+                                    setHighestScoreFromCookie(newHighestScore)
+
                                 }
                             }
                         } else if (oldType === "body" && oldCycles > snakeLength - 2) {

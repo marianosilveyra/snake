@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
             <body className="flex flex-col justify-center w-full font-mono bg-gray-dark">
                 <Navigation />
 
-                <div className="flex w-full justify-center">
+                <div className="flex w-full justify-center h-[100dvh]">
                     <div className="container max-w-[1092px]">
                         <div className="flex flex-wrap justify-center px-4">
                             <div>{children}</div>
