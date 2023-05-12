@@ -62,7 +62,7 @@ export default function () {
           />
         </div>
         <div
-          className={`mt-4 border-2 ${walls ? " border-black-dark" : "border-transparent"} ${state === "loose" ? "!border-red-500" : ""}`}
+          className={`mt-4 border-2 ${walls ? " border-black-dark" : "border-transparent"} ${state === "loose" && walls ? "!border-red-500" : ""}`}
         >
           <div className={`relative h-[304px] w-[304px] border-2 bg-gray-default `}>
             {rows.map((i) => columns.map((j) => <Snake top={i} left={j} grid={grid} state={state} key={"" + i + j} />))}
