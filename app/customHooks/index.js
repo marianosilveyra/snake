@@ -136,6 +136,7 @@ export const useSnakeMovement = () => {
               updateCurrentScore()
             } else if (oldType === "body") {
               setState("loose")
+              setCurrentScore(0)
               if (currentScore > highestScore) {
                 setHighestScore(currentScore)
                 setNewHighScore(true)
@@ -169,7 +170,6 @@ export const useSnakeMovement = () => {
                 type = "empty"
               }
             }
-
             return [type || oldType, cycles]
           })
         )
