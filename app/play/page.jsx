@@ -13,7 +13,7 @@ export default function () {
     setWalls,
     level,
     setLevel,
-    levels,
+    levelsSpeed,
     grid,
     snakeLength,
     initialSnakeLength,
@@ -22,6 +22,7 @@ export default function () {
     rows,
     columns,
     newHighScore,
+    currentScore,
   ] = useSnakeMovement()
 
   return (
@@ -43,22 +44,22 @@ export default function () {
         </div>
         <div className="flex justify-between mb-2">
           <Button
-            onCLick={() => setLevel(levels["easy"])}
+            onCLick={() => setLevel("easy")}
             text={"Easy"}
             disabled={state === "playing"}
-            className={level === levels["easy"] ? "!bg-violet-light text-white mr-1" : "bg-white mr-1"}
+            className={level === "easy" ? "!bg-violet-light text-white mr-1" : "bg-white mr-1"}
           />
           <Button
-            onCLick={() => setLevel(levels["medium"])}
+            onCLick={() => setLevel("medium")}
             text={"Medium"}
             disabled={state === "playing"}
-            className={level === levels["medium"] ? "!bg-violet-light text-white mr-1" : "bg-white mr-1"}
+            className={level === "medium" ? "!bg-violet-light text-white mr-1" : "bg-white mr-1"}
           />
           <Button
-            onCLick={() => setLevel(levels["hard"])}
+            onCLick={() => setLevel("hard")}
             text={"Hard"}
             disabled={state === "playing"}
-            className={level === levels["hard"] ? "!bg-violet-light text-white" : "bg-white"}
+            className={level === "hard" ? "!bg-violet-light text-white" : "bg-white"}
           />
         </div>
         <div
@@ -71,11 +72,11 @@ export default function () {
         <div className="w-full p-2">
           <div className="flex justify-between">
             <p>Score</p>
-            <p>{snakeLength - initialSnakeLength}</p>
+            <p>{Math.round(currentScore)}</p>
           </div>
           <div className={`flex justify-between ${newHighScore ? "font-bold text-green-700 animate-bounce" : ""}`}>
             <p>{newHighScore ? "New highest score!" : "Highest score"}</p>
-            <p>{snakeLength - initialSnakeLength > highestScore ? snakeLength - initialSnakeLength : highestScore}</p>
+            <p>{currentScore > highestScore ? Math.round(currentScore) : Math.round(highestScore)}</p>
           </div>
         </div>
         <div className="lg:hidden">

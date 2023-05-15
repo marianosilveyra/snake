@@ -43,13 +43,14 @@ export const useSnakeMovement = () => {
   const initialSnakeLength = 2
   const [snakeLength, setSnakeLength] = useState(initialSnakeLength)
   const [moreFood, setMoreFood] = useState(true)
-  const levels = {
+  const levelsSpeed = {
     easy: 170,
     medium: 140,
     hard: 110,
   }
-  const [level, setLevel] = useState(levels["medium"])
+  const [level, setLevel] = useState("medium")
   const [state, setState] = useState("start")
+  const [currentScore, setCurrentScore] = useState(0)
   const [highestScore, setHighestScore] = useState(initialSnakeLength - 2)
   const [highestScoreFromCookie, setHighestScoreFromCookie] = useCookie("highestScore", highestScore)
   const [walls, setWalls] = useState(false)
@@ -60,6 +61,18 @@ export const useSnakeMovement = () => {
     bottom: () => setTop((top) => (top === limit - 1 ? (walls ? setState("loose") : 0) : top + 1)),
     right: () => setLeft((left) => (left === limit - 1 ? (walls ? setState("loose") : 0) : left + 1)),
     left: () => setLeft((left) => (left === 0 ? (walls ? setState("loose") : limit - 1) : left - 1)),
+  }
+
+  const updateCurrentScore = () => {
+    const levelWeight = {
+      easy: walls ? 1 : 0.75,
+      medium: walls ? 1.25 : 1,
+      hard: walls ? 1.5 : 1.25,
+    }
+
+    const additionalScore = levelWeight[level]
+
+    setCurrentScore((currentScore) => currentScore + additionalScore)
   }
 
   const setGameState = () => {
@@ -86,7 +99,7 @@ export const useSnakeMovement = () => {
       advance[direction]()
       interval = setInterval(() => {
         advance[direction]()
-      }, level)
+      }, levelsSpeed[level])
     } else {
       didMountRef.current = true
     }
@@ -110,6 +123,33 @@ export const useSnakeMovement = () => {
 
   useEffect(() => {
     if (state === "playing") {
+      columns.forEach((i) =>
+        rows.forEach((j) => {
+          const oldType = grid[i][j][0]
+          let type
+
+          if (i === left && j === top) {
+            type = "head"
+            if (oldType === "food") {
+              setSnakeLength(snakeLength + 1)
+              setMoreFood(true)
+              updateCurrentScore()
+            } else if (oldType === "body") {
+              setState("loose")
+              if (currentScore > highestScore) {
+                setHighestScore(currentScore)
+                setNewHighScore(true)
+                confetti()
+                setTimeout(() => {
+                  setNewHighScore(false)
+                }, 4000)
+                setHighestScoreFromCookie(currentScore)
+              }
+            }
+          }
+        })
+      )
+
       setGrid((grid) =>
         columns.map((i) =>
           rows.map((j) => {
@@ -117,25 +157,8 @@ export const useSnakeMovement = () => {
             const oldCycles = grid[i][j][1]
             let type
             let cycles
-
             if (i === left && j === top) {
               type = "head"
-              if (oldType === "food") {
-                setSnakeLength(snakeLength + 1)
-                setMoreFood(true)
-              } else if (oldType === "body") {
-                setState("loose")
-                if (snakeLength - initialSnakeLength > highestScore) {
-                  const newHighestScore = snakeLength - initialSnakeLength
-                  setHighestScore(newHighestScore)
-                  confetti()
-                  setNewHighScore(true)
-                  setTimeout(() => {
-                    setNewHighScore(false)
-                  }, 4000);
-                  setHighestScoreFromCookie(newHighestScore)
-                }
-              }
             } else if (oldType === "body" && oldCycles > snakeLength - 2) {
               type = "empty"
             } else if (oldType === "body" || oldType === "head") {
@@ -165,7 +188,7 @@ export const useSnakeMovement = () => {
     setWalls,
     level,
     setLevel,
-    levels,
+    levelsSpeed,
     grid,
     snakeLength,
     initialSnakeLength,
@@ -174,5 +197,6 @@ export const useSnakeMovement = () => {
     rows,
     columns,
     newHighScore,
+    currentScore,
   ]
 }
