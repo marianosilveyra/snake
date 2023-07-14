@@ -16,6 +16,7 @@
     "fs": "^0.0.1-security",
     "mongoose": "^6.10.0",
     "next": "12.x.x",
+    "path": "^0.12.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-svg": "^16.1.4",
