@@ -1,11 +1,9 @@
-"use client"
-
-import links from "./components/Navigation/links"
-import Button from "./components/Button"
-import Snake from "./assets/svg/snake.jsx"
+import links from "../components/Navigation/links"
+import Button from "../components/Button"
+import Snake from "../assets/svg/snake.jsx"
 import { motion } from "framer-motion"
 import reactUseCookie from "react-use-cookie"
-import HighestScore from "./components/HighestScore"
+import HighestScore from "../components/HighestScore"
 
 export default function HomePage() {
     const [highestScoreFromCookie, setHighestScoreFromCookie] = reactUseCookie("highestScore", 0)

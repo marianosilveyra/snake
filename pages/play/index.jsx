@@ -1,9 +1,7 @@
-"use client"
-
-import Button from "../components/Button"
-import Snake from "../components/Snake"
-import Arrows from "../components/Arrows"
-import { useSnakeMovement } from "../customHooks"
+import Button from "../../components/Button"
+import Snake from "../../components/Snake"
+import Arrows from "../../components/Arrows"
+import { useSnakeMovement } from "../../hooks"
 
 export default function () {
   const [
