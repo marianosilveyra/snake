@@ -1,4 +1,4 @@
-export const updateScores = async (player, score) => {
+export const updateScores = async ({player, score}) => {
   try {
     const response = await fetch("/api/updateScoresApi", {
       method: "POST",

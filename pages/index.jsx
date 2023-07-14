@@ -6,6 +6,7 @@ import reactUseCookie from "react-use-cookie"
 import HighestScore from "../components/HighestScore"
 import { useEffect, useState } from "react"
 import { getScores } from "../utils/getScores"
+import { updateScores } from "@/utils/updateScores"
 
 export default function HomePage() {
   const [highestScoreFromCookie, setHighestScoreFromCookie] = reactUseCookie("highestScore", 0)
@@ -26,7 +27,7 @@ export default function HomePage() {
 
   return (
     <div className="flex h-screen flex-col justify-center">
-      <button onClick={() => handleGameOver(3)}>Click</button>
+      <button onClick={() => updateScores({player: "nano2", score: 45})}>Click</button>
       <div className="self-center">
         <motion.h1
           drag
