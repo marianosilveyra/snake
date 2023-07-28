@@ -18,7 +18,7 @@ export default function Prueba() {
   }, [])
   return (
     <div className="w-full flex flex-col items-center justify-center mt-24">
-      <button onClick={() => updateScores({ player: "nanodeployado", score: 3 })}>Click</button>
+      <button onClick={() => updateScores({ player: "jajaja", score: 33 })}>Click</button>
       <div>{JSON.stringify(scores)}</div>
     </div>
   )
