@@ -1,3 +1,4 @@
+import { getScores } from "@/utils/getScores"
 import { updateScores } from "@/utils/updateScores"
 import { useEffect, useState } from "react"
 
@@ -16,8 +17,9 @@ export default function Prueba() {
     fetchScores()
   }, [])
   return (
-    <div className="w-full flex items-center justify-center mt-24">
+    <div className="w-full flex flex-col items-center justify-center mt-24">
       <button onClick={() => updateScores({ player: "nanodeployado", score: 3 })}>Click</button>
+      <div>{JSON.stringify(scores)}</div>
     </div>
   )
 }
