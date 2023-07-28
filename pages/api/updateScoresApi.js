@@ -11,6 +11,7 @@ const updateScoresApi = async (req, res) => {
       // Read the existing scores from the JSON file
       const scoresData = await fs.readFile(scoresFilePath, "utf-8");
       let scores = JSON.parse(scoresData);
+      console.log({scores})
 
       // Check if the player already exists in the scores array
       const playerIndex = scores.findIndex((item) => item.hasOwnProperty(player));
@@ -31,7 +32,10 @@ const updateScoresApi = async (req, res) => {
         scores.push(newEntry);
       }
 
+      console.log({scoresUpdated: scores})
+
       // Write the updated scores back to the JSON file
+      console.log({scoresFilePath})
       await fs.writeFile(scoresFilePath, JSON.stringify(scores));
 
       res.status(200).json({ message: "Score saved successfully!" });
