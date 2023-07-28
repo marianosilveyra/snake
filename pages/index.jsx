@@ -4,30 +4,12 @@ import Snake from "../assets/svg/snake.jsx"
 import { motion } from "framer-motion"
 import reactUseCookie from "react-use-cookie"
 import HighestScore from "../components/HighestScore"
-import { useEffect, useState } from "react"
-import { getScores } from "../utils/getScores"
-import { updateScores } from "@/utils/updateScores"
 
 export default function HomePage() {
   const [highestScoreFromCookie, setHighestScoreFromCookie] = reactUseCookie("highestScore", 0)
 
-  const [scores, setScores] = useState([])
-  useEffect(() => {
-    const fetchScores = async () => {
-      try {
-        const scoresData = await getScores()
-        setScores(scoresData)
-      } catch (error) {
-        console.error("An error occurred while fetching scores:", error)
-      }
-    }
-
-    fetchScores()
-  }, [])
-
   return (
     <div className="flex h-screen flex-col justify-center">
-      <button onClick={() => updateScores({player: "nano2", score: 45})}>Click</button>
       <div className="self-center">
         <motion.h1
           drag
