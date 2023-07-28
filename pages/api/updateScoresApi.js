@@ -4,6 +4,7 @@ import path from "path";
 const scoresFilePath = path.join(process.cwd(), "data", "scores.json");
 
 const updateScoresApi = async (req, res) => {
+  console.log("pasé por acá")
   if (req.method === "POST") {
     const { player, score } = req.body;
 
