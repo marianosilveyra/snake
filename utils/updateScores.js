@@ -8,6 +8,8 @@ export const updateScores = async ({player, score}) => {
       body: JSON.stringify({ player, score }),
     });
 
+    console.log(response)
+
     if (response.ok) {
       console.log("Score saved successfully!");
     } else {
