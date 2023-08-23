@@ -56,14 +56,6 @@ export const useSnakeMovement = () => {
   const [walls, setWalls] = useState(false)
   const [newHighScore, setNewHighScore] = useState(false)
 
-  const [date, setDate] = useState(false)
-  useEffect(() => {
-    if (currentScore > 9) {
-      setDate(true)
-      setState("pause")
-    }
-  }, [currentScore])
-
   const advance = {
     top: () => setTop((top) => (top === 0 ? (walls ? setState("loose") : limit - 1) : top - 1)),
     bottom: () => setTop((top) => (top === limit - 1 ? (walls ? setState("loose") : 0) : top + 1)),
@@ -206,6 +198,5 @@ export const useSnakeMovement = () => {
     columns,
     newHighScore,
     currentScore,
-    date,
   }
 }

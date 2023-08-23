@@ -18,20 +18,7 @@ export default function () {
     columns,
     newHighScore,
     currentScore,
-    date,
   } = useSnakeMovement()
-
-  const Borrar = () => {
-    return (
-      <div className="font-bold p-4">
-        <h1 className="mb-4">Estás para salir a tomar algo este findeeeeee</h1>
-        <div className="flex justify-between">
-          <Button onCLick={() => alert("Respuesta correctaaaa")} text="Siiiiiiii" className="bg-fucsia-default text-white mr-1 lg:delay-0 lg:hover:-translate-y-[0px] lg:hover:scale-100" />
-          <Button text="No :(" disabled className="bg-fucsia-default text-white mr-1 lg:delay-0 lg:hover:-translate-y-[0px] lg:hover:scale-100" />
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="flex h-screen pt-14">
@@ -76,10 +63,7 @@ export default function () {
           }`}
         >
           <div className={`relative h-[304px] w-[304px] border-2 bg-gray-default `}>
-          {date && <div className="">
-            <Borrar />
-          </div>}
-            {!date && rows.map((i) => columns.map((j) => <Snake top={i} left={j} grid={grid} state={state} key={"" + i + j} />))}
+            {rows.map((i) => columns.map((j) => <Snake top={i} left={j} grid={grid} state={state} key={"" + i + j} />))}
           </div>
         </div>
         <div className="w-full p-2">
