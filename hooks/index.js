@@ -58,7 +58,7 @@ export const useSnakeMovement = () => {
 
   const [date, setDate] = useState(false)
   useEffect(() => {
-    if (currentScore >= 20) {
+    if (currentScore > 14) {
       setDate(true)
     }
   }, [currentScore])
