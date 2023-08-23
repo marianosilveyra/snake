@@ -26,7 +26,7 @@ export default function () {
       <div className="font-bold p-4">
         <h1 className="mb-4">Estás para salir a tomar algo este findeeeeee</h1>
         <div className="flex justify-between">
-          <Button onCLick={() => alert("Respuesta correctaaaa")} text="Siiiiiiii" className="bg-fucsia-default text-white mr-1" />
+          <Button onCLick={() => alert("Respuesta correctaaaa")} text="Siiiiiiii" className="bg-fucsia-default text-white mr-1 lg:delay-0 lg:hover:-translate-y-[0px] lg:hover:scale-100" />
           <Button text="No :(" disabled className="bg-fucsia-default text-white mr-1 lg:delay-0 lg:hover:-translate-y-[0px] lg:hover:scale-100" />
         </div>
       </div>
