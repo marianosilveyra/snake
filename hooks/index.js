@@ -122,6 +122,10 @@ export const useSnakeMovement = () => {
   }, [])
 
   useEffect(() => {
+    if (currentScore === "loose") setCurrentScore(0)
+  }, [currentScore])
+
+  useEffect(() => {
     if (state === "playing") {
       columns.forEach((i) =>
         rows.forEach((j) => {
@@ -136,7 +140,6 @@ export const useSnakeMovement = () => {
               updateCurrentScore()
             } else if (oldType === "body") {
               setState("loose")
-              setCurrentScore(0)
               if (currentScore > highestScore) {
                 setHighestScore(currentScore)
                 setNewHighScore(true)
