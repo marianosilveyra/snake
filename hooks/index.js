@@ -122,8 +122,8 @@ export const useSnakeMovement = () => {
   }, [])
 
   useEffect(() => {
-    if (currentScore === "loose") setCurrentScore(0)
-  }, [currentScore])
+    if (state === "loose") setCurrentScore(0)
+  }, [state])
 
   useEffect(() => {
     if (state === "playing") {
