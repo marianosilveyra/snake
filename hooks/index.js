@@ -122,7 +122,18 @@ export const useSnakeMovement = () => {
   }, [])
 
   useEffect(() => {
-    if (state === "loose") setCurrentScore(0)
+    if (state === "loose") {
+      if (currentScore > highestScore) {
+        setHighestScore(currentScore)
+        setNewHighScore(true)
+        confetti()
+        setTimeout(() => {
+          setNewHighScore(false)
+        }, 4000)
+        setHighestScoreFromCookie(currentScore)
+      }
+      setCurrentScore(0)
+    }
   }, [state])
 
   useEffect(() => {
@@ -140,15 +151,6 @@ export const useSnakeMovement = () => {
               updateCurrentScore()
             } else if (oldType === "body") {
               setState("loose")
-              if (currentScore > highestScore) {
-                setHighestScore(currentScore)
-                setNewHighScore(true)
-                confetti()
-                setTimeout(() => {
-                  setNewHighScore(false)
-                }, 4000)
-                setHighestScoreFromCookie(currentScore)
-              }
             }
           }
         })
