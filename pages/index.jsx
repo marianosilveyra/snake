@@ -6,7 +6,7 @@ import reactUseCookie from "react-use-cookie"
 import HighestScore from "../components/HighestScore"
 
 export default function HomePage() {
-  const [highestScoreFromCookie, setHighestScoreFromCookie] = reactUseCookie("highestScore", 0)
+  const [highestScoreFromCookie ] = reactUseCookie("highestScore", 0)
 
   return (
     <div className="flex h-screen flex-col justify-center">
@@ -21,7 +21,7 @@ export default function HomePage() {
         >
           Welcome to Snake
         </motion.h1>
-        <Button animate={true} href={links[1].route} text="NEW GAME" className="bg-fucsia-default text-white" />
+        <Button animate={true} href={links[1].route} text="NEW GAME" className="bg-fucsia-default text-white hover:cursor-pointer" />
         <motion.div
           drag
           dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
